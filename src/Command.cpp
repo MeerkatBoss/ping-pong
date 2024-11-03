@@ -1,10 +1,7 @@
 #include "Command.hpp"
 #include <algorithm>
 #include <cctype>
-#include <ios>
 #include <string>
-
-namespace client {
 
 std::istream& operator>>(std::istream& is, Command& command) {
   std::string string;
@@ -20,10 +17,8 @@ std::istream& operator>>(std::istream& is, Command& command) {
   } else if (string == "stop") {
     command = Command::Stop;
   } else {
-    is.setstate(std::ios_base::failbit);
+    command = Command::Unknown;
   }
 
   return is;
 }
-
-} // namespace client

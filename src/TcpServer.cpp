@@ -43,7 +43,9 @@ void listen_tcp(uint8_t ip_address[4], uint16_t port) {
     }
     assert(client >= 0);
 
+    puts("Connected!");
     serve_client(client);
+    puts("Disconnected!");
     if (errno == EINTR) {
       break;
     }
@@ -95,6 +97,11 @@ static void serve_client(int socket) {
 
     assert(res == sizeof(message_size));
 
+    if (message_size == 0) {
+      break;
+    }
+    message_size = ntohl(message_size);
+
     size_t offset = 0;
     size_t read_length = message_size;
     if (message_size > buffer_size) {
@@ -116,7 +123,7 @@ static void serve_client(int socket) {
       break;
     }
 
-    printf("%*s\n", (int) message_size, buffer);
+    printf("%u: %.*s\n", message_size, (int) message_size, buffer);
     if (message_size <= 4) {
       uint32_t length = htonl(4);
       res = write(socket, &length, 4);
