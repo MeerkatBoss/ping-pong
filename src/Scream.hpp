@@ -14,8 +14,10 @@
 
 #include <cstddef>
 
-static constexpr size_t TcpScreamLength = 20 * 1024;
+static constexpr size_t TcpScreamLength = 100 * 1024;
 
-#define UDP_SCREAM "I Have No TCP And I Must Scream";
+static inline constexpr char UdpScream[] = "I Have No TCP And I Must Scream";
+
+static constexpr size_t UdpScreamLength = sizeof(UdpScream) - 1;
 
 #endif /* Scream.hpp */
